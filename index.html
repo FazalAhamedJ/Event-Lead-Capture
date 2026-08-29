@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Lead Capture" />
+  <title>Event Lead Capture</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="appShell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">AI EVENT DESK</div>
+        <h1>Lead Capture</h1>
+      </div>
+      <div id="storageStatus" class="status-pill">● Local</div>
+    </header>
+
+    <main>
+      <section id="homeView" class="view active">
+        <div class="hero-card">
+          <div>
+            <div class="eyebrow">FAST EVENT WORKFLOW</div>
+            <h2>Capture a meaningful lead in under a minute.</h2>
+            <p>Everything is stored locally on this iPad. Internet is not required after installation.</p>
+          </div>
+          <button class="primary jumbo" data-go="new">＋ New Lead</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="metric"><span>Leads</span><strong id="homeTotal">0</strong></article>
+          <article class="metric"><span>Hot</span><strong id="homeHot">0</strong></article>
+          <article class="metric"><span>Follow-ups due</span><strong id="homeDue">0</strong></article>
+          <article class="metric"><span>Photos</span><strong id="homePhotos">0</strong></article>
+        </div>
+
+        <div class="action-grid">
+          <button class="action-card" data-go="leads"><b>Lead List</b><span>Search, edit and follow up</span></button>
+          <button class="action-card" data-go="dashboard"><b>Dashboard</b><span>Priorities, interests and sources</span></button>
+          <button class="action-card" data-action="exportCSV"><b>Export CSV</b><span>Excel-friendly event export</span></button>
+          <button class="action-card" data-action="backup"><b>Full Backup</b><span>JSON including captured photos</span></button>
+        </div>
+      </section>
+
+      <section id="newView" class="view">
+        <div class="section-heading">
+          <button class="back" data-go="home">‹</button>
+          <div><div class="eyebrow">NEW INTERACTION</div><h2 id="formTitle">New Lead</h2></div>
+          <button class="ghost" id="clearFormBtn">Clear</button>
+        </div>
+
+        <form id="leadForm" autocomplete="off">
+          <input type="hidden" id="leadId" />
+
+          <div class="form-card">
+            <div class="step-label">1 · Who did we meet?</div>
+            <label>Visitor type</label>
+            <div class="choice-grid five" id="visitorTypeChoices">
+              <button type="button" class="choice" data-value="End Customer">End Customer</button>
+              <button type="button" class="choice" data-value="Existing Partner">Existing Partner</button>
+              <button type="button" class="choice" data-value="New Partner">New Partner</button>
+              <button type="button" class="choice" data-value="Existing ISV">Existing ISV</button>
+              <button type="button" class="choice" data-value="New ISV">New ISV</button>
+            </div>
+            <input type="hidden" id="visitorType" required />
+
+            <div class="two-col">
+              <label>Full name<input id="fullName" required placeholder="Name" /></label>
+              <label>Company / Organization<input id="company" required placeholder="Organization" /></label>
+              <label>Designation / Role<input id="designation" placeholder="e.g. Head of Data" /></label>
+              <label>Mobile<input id="mobile" inputmode="tel" placeholder="+966…" /></label>
+              <label>Email<input id="email" inputmode="email" type="email" placeholder="name@company.com" /></label>
+              <label>Industry
+                <select id="industry">
+                  <option value="">Select</option><option>Government / Public Sector</option><option>BFSI</option><option>Oil & Gas / Energy</option><option>Healthcare</option><option>Retail</option><option>Manufacturing</option><option>Telecom</option><option>Education</option><option>Technology / IT</option><option>Other</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <div class="step-label">2 · How did they reach us?</div>
+            <label>Referrer / source</label>
+            <div class="choice-grid" id="referrerChoices">
+              <button type="button" class="choice" data-value="Walk-in">Walk-in</button>
+              <button type="button" class="choice" data-value="Internal Team">Internal Team</button>
+              <button type="button" class="choice" data-value="Partner">Partner</button>
+              <button type="button" class="choice" data-value="ISV">ISV</button>
+              <button type="button" class="choice" data-value="Other">Other</button>
+            </div>
+            <input type="hidden" id="referrerType" />
+            <label id="referrerNameWrap" class="hidden">Referrer name / team / organization<input id="referrerName" placeholder="Who introduced them?" /></label>
+          </div>
+
+          <div class="form-card">
+            <div class="step-label">3 · What are they interested in?</div>
+            <div class="choice-grid interests" id="interestChoices">
+              <button type="button" class="choice multi" data-value="AI Strategy / Readiness">AI Strategy / Readiness</button>
+              <button type="button" class="choice multi" data-value="GenAI / LLM">GenAI / LLM</button>
+              <button type="button" class="choice multi" data-value="AI Agents">AI Agents</button>
+              <button type="button" class="choice multi" data-value="Data & Analytics">Data & Analytics</button>
+              <button type="button" class="choice multi" data-value="Automation">Automation</button>
+              <button type="button" class="choice multi" data-value="AI Infrastructure / GPU">AI Infrastructure / GPU</button>
+              <button type="button" class="choice multi" data-value="AI Security">AI Security</button>
+              <button type="button" class="choice multi" data-value="Computer Vision">Computer Vision</button>
+              <button type="button" class="choice multi" data-value="Voice / Conversational AI">Voice / Conversational AI</button>
+              <button type="button" class="choice multi" data-value="Industry AI">Industry AI</button>
+            </div>
+            <label>Specific vendor / solution discussed<input id="solution" placeholder="Optional" /></label>
+            <label>Main enquiry / requirement<textarea id="enquiry" rows="4" placeholder="One useful sentence describing what they need…"></textarea></label>
+          </div>
+
+          <div class="form-card">
+            <div class="step-label">4 · Qualification & next action</div>
+            <label>Priority</label>
+            <div class="choice-grid three" id="priorityChoices">
+              <button type="button" class="choice hot" data-value="Hot">Hot</button>
+              <button type="button" class="choice" data-value="Warm">Warm</button>
+              <button type="button" class="choice" data-value="Explore">Explore</button>
+            </div>
+            <input type="hidden" id="priority" />
+
+            <div class="two-col">
+              <label>Timeline<select id="timeline"><option value="">Select</option><option>Immediate</option><option>&lt; 3 months</option><option>3–6 months</option><option>6–12 months</option><option>Just exploring</option></select></label>
+              <label>Next action<select id="nextAction"><option value="">Select</option><option>Customer meeting</option><option>Demo</option><option>POC</option><option>Assessment</option><option>Proposal / Quotation</option><option>Technical discussion</option><option>Partner discussion</option><option>Training / Enablement</option><option>Send information</option><option>None yet</option></select></label>
+              <label>Follow-up owner<input id="owner" placeholder="Name / team" /></label>
+              <label>Follow-up date<input id="followupDate" type="date" /></label>
+              <label>Budget / opportunity<input id="budget" placeholder="Optional" /></label>
+              <label>Preferred contact<select id="preferredContact"><option value="">Select</option><option>Email</option><option>Phone</option><option>WhatsApp</option><option>Meeting</option></select></label>
+            </div>
+            <label>Why should we follow up?<textarea id="followupReason" rows="3" placeholder="e.g. Needs Arabic voice AI demo for a 500-seat contact centre next week."></textarea></label>
+          </div>
+
+          <div class="form-card">
+            <div class="step-label">5 · Visitor pass / business card</div>
+            <p class="muted">Photos stay on this iPad and are compressed before storage.</p>
+            <label class="camera-button">📷 Capture Photo<input id="photoInput" type="file" accept="image/*" capture="environment" hidden /></label>
+            <div id="photoStrip" class="photo-strip"></div>
+          </div>
+
+          <div class="sticky-save">
+            <div><small>Auto score</small><strong id="scorePreview">—</strong></div>
+            <button type="submit" class="primary jumbo">Save Lead</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="leadsView" class="view">
+        <div class="section-heading"><button class="back" data-go="home">‹</button><div><div class="eyebrow">EVENT RECORDS</div><h2>Leads</h2></div><button class="primary small" data-go="new">＋ New</button></div>
+        <div class="toolbar">
+          <input id="searchBox" placeholder="Search name, company, enquiry…" />
+          <select id="filterPriority"><option value="">All priorities</option><option>Hot</option><option>Warm</option><option>Explore</option></select>
+        </div>
+        <div id="leadList" class="lead-list"></div>
+      </section>
+
+      <section id="dashboardView" class="view">
+        <div class="section-heading"><button class="back" data-go="home">‹</button><div><div class="eyebrow">EVENT OVERVIEW</div><h2>Dashboard</h2></div></div>
+        <div class="stats-grid dashboard-stats">
+          <article class="metric"><span>Total</span><strong id="dashTotal">0</strong></article>
+          <article class="metric"><span>Hot</span><strong id="dashHot">0</strong></article>
+          <article class="metric"><span>Warm</span><strong id="dashWarm">0</strong></article>
+          <article class="metric"><span>Due</span><strong id="dashDue">0</strong></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="form-card"><h3>Visitor types</h3><div id="visitorBreakdown" class="bar-list"></div></article>
+          <article class="form-card"><h3>Top interests</h3><div id="interestBreakdown" class="bar-list"></div></article>
+          <article class="form-card"><h3>Referrer sources</h3><div id="referrerBreakdown" class="bar-list"></div></article>
+          <article class="form-card"><h3>Next actions</h3><div id="actionBreakdown" class="bar-list"></div></article>
+        </div>
+      </section>
+
+      <section id="settingsView" class="view">
+        <div class="section-heading"><button class="back" data-go="home">‹</button><div><div class="eyebrow">DEVICE & DATA</div><h2>Settings</h2></div></div>
+        <div class="form-card">
+          <h3>Event details</h3>
+          <label>Event name<input id="eventName" placeholder="e.g. LEAP 2027" /></label>
+          <label>Device label<input id="deviceLabel" placeholder="e.g. Main Booth iPad" /></label>
+          <button class="primary" id="saveSettingsBtn">Save settings</button>
+        </div>
+        <div class="form-card">
+          <h3>Backup & restore</h3>
+          <div class="action-grid compact">
+            <button type="button" class="action-card" data-action="exportCSV"><b>Export CSV</b><span>Contacts & qualification</span></button>
+            <button type="button" class="action-card" data-action="backup"><b>Full JSON Backup</b><span>Includes photos</span></button>
+            <label class="action-card file-card"><b>Restore Backup</b><span>Import a previous JSON backup</span><input id="restoreInput" type="file" accept="application/json" hidden /></label>
+          </div>
+        </div>
+        <div class="danger-card"><h3>Danger zone</h3><p>Delete every lead and locally stored photo from this iPad.</p><button id="deleteAllBtn" class="danger">Delete All Event Data</button></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button data-go="home" class="active">⌂<span>Home</span></button>
+      <button data-go="new">＋<span>Capture</span></button>
+      <button data-go="leads">☷<span>Leads</span></button>
+      <button data-go="dashboard">⌁<span>Dashboard</span></button>
+      <button data-go="settings">⚙<span>Settings</span></button>
+    </nav>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
